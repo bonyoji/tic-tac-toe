@@ -114,7 +114,11 @@ class Game
     end
 
     if @@turn_count > 9
-      puts 'DRAW! NO WINNER'
+      if winner?()
+        puts "WINNER! Congratulations #{@@winner}"
+      else
+        puts 'DRAW! NO WINNER'
+      end
     end
   end
 
