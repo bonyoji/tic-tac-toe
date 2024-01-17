@@ -2,6 +2,7 @@ class Game
   @@turn_count = 1
   @@winner = ""
 
+
   def initialize()
     @player1 = 'Player 1'
     @player2 = 'Player 2'
@@ -29,20 +30,44 @@ class Game
   def player_choice(player, symbol)
     puts "#{player}: Please enter an available number"
     input = ((gets.chomp).to_i)
-    if input.between?(1,9)
-      input = input - 1
-    else
-      until input < 10 && input > 0 do
-        input = ((gets.chomp).to_i) - 1
-      end
-    end
 
-    add_to_board(input, symbol)
+    if valid?(input)
+      input = input - 1
+      add_to_board(input, symbol)
+    else
+      display_board(@board)
+      player_choice(player, symbol)
+    end
+  end
+
+  def valid?(input)
+    if input.between?(1,9)
+      if taken?(input)
+        return false
+      else
+        return true
+      end
+    else
+      return false
+    end
+  end
+
+  def taken?(input)
+  index = input - 1
+    if @board[index].to_i.between?(1,9)
+      return false
+    else
+      return true
+    end
   end
 
   def add_to_board(index, symbol)
     @board[index] = symbol
     @@turn_count += 1
+  end
+
+  def won?
+
   end
 
   def play
