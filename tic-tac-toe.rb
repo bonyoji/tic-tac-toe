@@ -1,6 +1,16 @@
 class Game
   @@turn_count = 1
   @@winner = ""
+  WIN_COMBOS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
 
 
   def initialize()
@@ -66,8 +76,26 @@ class Game
     @@turn_count += 1
   end
 
-  def won?
+  def winner?
+    WIN_COMBOS.each do |win_combo|
+      win_i_1 = win_combo[0]
+      win_i_2 = win_combo[1]
+      win_i_3 = win_combo[2]
 
+      pos_1 = @board[win_i_1]
+      pos_2 = @board[win_i_2]
+      pos_3 = @board[win_i_3]
+
+      if (pos_1 == pos_2) && (pos_2 == pos_3)
+        if pos_1 == 'X'
+          @@winner = @player1
+        else
+          @@winner = @player2
+        end
+        return true
+      end
+    end
+    return false
   end
 
   def play
@@ -76,8 +104,17 @@ class Game
     display_board(@board)
 
     until @@turn_count > 9 do
-      player_turn(@@turn_count)
-      display_board(@board)
+      if winner?()
+        puts "WINNER! Congratulations #{@@winner}"
+        break
+      else
+        player_turn(@@turn_count)
+        display_board(@board)
+      end
+    end
+
+    if @@turn_count > 9
+      puts 'DRAW! NO WINNER'
     end
   end
 
