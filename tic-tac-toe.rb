@@ -2,9 +2,9 @@ class Game
   @@turn_count = 1
   @@winner = ""
 
-  def initialize(player1, player2)
-    @player1 = player1
-    @player2 = player2
+  def initialize()
+    @player1 = 'Player 1'
+    @player2 = 'Player 2'
     @board = Array(1..9)
   end
 
@@ -54,14 +54,5 @@ class Game
 
 end
 
-class Player
-  def initialize(name)
-    @name = name
-  end
-end
-
-p1 = Player.new('Player 1')
-p2 = Player.new('Player 2')
-
-game = Game.new(p1, p2)
+game = Game.new()
 game.play
