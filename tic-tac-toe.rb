@@ -27,18 +27,22 @@ class Game
   end
 
   def player_choice(player, symbol)
-    puts "#{player} please enter an available number"
-    input = input_to_index(gets.chomp)
+    puts "#{player}: Please enter an available number"
+    input = ((gets.chomp).to_i)
+    if input.between?(1,9)
+      input = input - 1
+    else
+      until input < 10 && input > 0 do
+        input = ((gets.chomp).to_i) - 1
+      end
+    end
+
     add_to_board(input, symbol)
   end
 
   def add_to_board(index, symbol)
     @board[index] = symbol
     @@turn_count += 1
-  end
-
-  def input_to_index(user_input)
-    user_input.to_i - 1
   end
 
   def play
